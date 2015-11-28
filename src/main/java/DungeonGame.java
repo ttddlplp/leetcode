@@ -1,56 +1,32 @@
-import java.util.Arrays;
-
 public class DungeonGame {
     public int calculateMinimumHP(int[][] dungeon) {
-        int maxY = dungeon.length - 1;
-        int maxX = dungeon[0].length - 1;
-
-        int[][] dp = new int[dungeon.length + 1][dungeon[0].length + 1];
-        int[][] buffer = new int[dungeon.length + 1][dungeon[0].length + 1];
-        for (int i = 0; i < dp.length; i++) {
-            Arrays.fill(dp[i], 1);
+        if (dungeon == null || dungeon.length == 0 || dungeon[0].length == 0) {
+            return 0;
         }
-        for (int i = 0; i < dungeon.length; i++) {
-            for (int j = 0; j < dungeon[i].length; j++) {
 
-                int minLeftLife = dp[i + 1][j];
-                int minTopLife = dp[i][j + 1];
-                int currentLife = Math.min(minLeftLife, minTopLife);
-                int currentBuffer;
-                
-                if (minLeftLife < minTopLife) {
-                    currentBuffer = buffer[i + 1][j];
-                } else {
-                    currentBuffer = buffer[i][j + 1];
-                }
+        int m = dungeon.length;
+        int n = dungeon[0].length;
 
-                int value = dungeon[i][j];
-                if (value >= 0) {
-                    buffer[i + 1][j + 1] = currentBuffer + value;
-                    dp[i + 1][j + 1] = value * -1 + currentLife;
-                } else {
-                    int remainBuffer = currentBuffer - value;
-                    if (remainBuffer > 0) {
-                        buffer[i + 1][j + 1] = remainBuffer + value;
-                        dp[i + 1][j + 1] = currentLife;
-                    } else {
-                        buffer[i + 1][j + 1] = 0;
-                        dp[i + 1][j + 1] = remainBuffer * -1 + currentLife;
-                    }
-                }
+        int[][] health = new int[m][n];
+
+        health[m - 1][n - 1] = Math.max(1, 1 - dungeon[m - 1][n - 1]);
+
+        for (int i = m - 2; i >= 0; i--) {
+            health[i][n - 1] = Math.max(1, health[i + 1][n - 1] - dungeon[i][n - 1]);
+        }
+
+        for (int i = n - 2; i >= 0; i--) {
+            health[m - 1][i] = Math.max(1, health[m - 1][i + 1] - dungeon[m - 1][i]);
+        }
+
+        for (int i = m - 2; i >= 0; i--) {
+            for (int j = n - 2; j >= 0; j--) {
+                int right = Math.max(1, health[i][j + 1] - dungeon[i][j]);
+                int down = Math.max(1, health[i + 1][j] - dungeon[i][j]);
+                health[i][j] = Math.min(right, down);
             }
         }
 
-        for (int i = 0; i < dp.length; i++) {
-            System.out.println(Arrays.toString(dp[i]));
-        }
-
-        System.out.println("----------");
-
-        for (int i = 0; i < buffer.length; i++) {
-            System.out.println(Arrays.toString(buffer[i]));
-        }
-
-        return dp[maxX + 1][maxY + 1];
+        return health[0][0];
     }
 }
