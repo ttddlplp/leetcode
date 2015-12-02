@@ -6,6 +6,7 @@ import java.util.Objects;
 public class ListNode {
     int val;
     ListNode next;
+    ListNode before;
     ListNode(int x) { val = x; }
 
 
