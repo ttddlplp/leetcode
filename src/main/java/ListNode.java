@@ -37,7 +37,7 @@ public class ListNode {
             currentNode = listNode;
         }
 
-        public Builder addNextAndReturn(int val) {
+        public Builder with(int val) {
             currentNode.next = new ListNode(val);
             currentNode = currentNode.next;
             return this;

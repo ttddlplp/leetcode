@@ -12,10 +12,10 @@ public class SortListTest {
 
     @Test
     public void testSort() throws Exception {
-        ListNode listNode = new ListNode.Builder(3).addNextAndReturn(15)
-                .addNextAndReturn(4)
-                .addNextAndReturn(7)
-                .addNextAndReturn(19)
+        ListNode listNode = new ListNode.Builder(3).with(15)
+                .with(4)
+                .with(7)
+                .with(19)
                 .build();
         ListNode listNode1 = sortList.sortList(listNode);
         System.out.println(listNode1);

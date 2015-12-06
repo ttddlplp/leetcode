@@ -19,9 +19,9 @@ public class InsertionSortListTest {
     public void test1() throws Exception {
         ListNode result =
                 insertionSortList.insertionSortList(
-                        new ListNode.Builder(4).addNextAndReturn(3).addNextAndReturn(5).addNextAndReturn(6).build()
+                        new ListNode.Builder(4).with(3).with(5).with(6).build()
                 );
-        ListNode expected = new ListNode.Builder(3).addNextAndReturn(4).addNextAndReturn(5).addNextAndReturn(6).build();
+        ListNode expected = new ListNode.Builder(3).with(4).with(5).with(6).build();
         assertEquals(expected, result);
 
     }
@@ -30,9 +30,9 @@ public class InsertionSortListTest {
     public void test2() throws Exception {
         ListNode result =
                 insertionSortList.insertionSortList(
-                        new ListNode.Builder(6).addNextAndReturn(5).addNextAndReturn(4).addNextAndReturn(3).build()
+                        new ListNode.Builder(6).with(5).with(4).with(3).build()
                 );
-        ListNode expected = new ListNode.Builder(3).addNextAndReturn(4).addNextAndReturn(5).addNextAndReturn(6).build();
+        ListNode expected = new ListNode.Builder(3).with(4).with(5).with(6).build();
         assertEquals(expected, result);
 
     }
@@ -41,9 +41,9 @@ public class InsertionSortListTest {
     public void test3() throws Exception {
         ListNode result =
                 insertionSortList.insertionSortList(
-                        new ListNode.Builder(5).addNextAndReturn(5).addNextAndReturn(5).addNextAndReturn(5).build()
+                        new ListNode.Builder(5).with(5).with(5).with(5).build()
                 );
-        ListNode expected = new ListNode.Builder(5).addNextAndReturn(5).addNextAndReturn(5).addNextAndReturn(5).build();
+        ListNode expected = new ListNode.Builder(5).with(5).with(5).with(5).build();
         assertEquals(expected, result);
     }
 
@@ -61,9 +61,9 @@ public class InsertionSortListTest {
     public void test5() throws Exception {
         ListNode result =
                 insertionSortList.insertionSortList(
-                        new ListNode.Builder(4).addNextAndReturn(2).addNextAndReturn(1).addNextAndReturn(3).build()
+                        new ListNode.Builder(4).with(2).with(1).with(3).build()
                 );
-        ListNode expected = new ListNode.Builder(1).addNextAndReturn(2).addNextAndReturn(3).addNextAndReturn(4).build();
+        ListNode expected = new ListNode.Builder(1).with(2).with(3).with(4).build();
         assertEquals(expected, result);
     }
 }
