@@ -56,7 +56,7 @@ public class RandomListNode{
     public String toString() {
         return com.google.common.base.MoreObjects.toStringHelper(this)
                 .add("label", label)
-                .add("random", random)
+                .add("random", random == null ? "null" : random.label)
                 .add("next", next)
                 .toString();
     }

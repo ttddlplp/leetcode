@@ -21,7 +21,7 @@ public class CopyListRandomPointerTest {
     public void test1() throws Exception {
         RandomListNode expected = new RandomListNode.Builder(5, 6).with(3, null).with(6, null).build();
 
-        RandomListNode actual = copyListRandomPointer.copyRandomList(expected);
+        RandomListNode actual = copyListRandomPointer.copyRandomList2(expected);
         assertEquals(actual, expected);
     }
 }
