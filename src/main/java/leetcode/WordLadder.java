@@ -3,46 +3,49 @@ package leetcode;
 import java.util.*;
 
 public class WordLadder {
-    public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-        Queue<String> cache = new LinkedList<>();
+    class Pair {
+        public String word;
+        public int level;
 
-        Set<String> visited = new HashSet<>();
-        Map<String, String> from = new HashMap<>();
-        cache.add(beginWord);
+        public Pair(String word, int level) {
+            this.word = word;
+            this.level = level;
+        }
+    }
+
+    public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
+        if (beginWord == null || endWord == null || wordList.isEmpty()) {
+            return 0;
+        }
+        wordList.add(endWord);
+        Queue<Pair> cache = new LinkedList<>();
+        cache.add(new Pair(beginWord, 1));
         while (!cache.isEmpty()) {
-            String currentWord = cache.poll();
-            for (String word : getAllPermutation(currentWord)) {
-                if (!visited.contains(word) && wordList.contains(word)) {
-                    cache.add(word);
-                    from.put(word, currentWord);
-                    if (word.equals(endWord)) {
-                        return getPathLength(from, word);
-                    }
+            Pair pair = cache.poll();
+            String currentWord = pair.word;
+            int level = pair.level;
+            for (String word : getAllPermutation(currentWord, wordList)) {
+                if (word.equals(endWord)) {
+                    return level + 1;
                 }
+                cache.add(new Pair(word, level + 1));
             }
         }
         return 0;
     }
 
-    private int getPathLength(Map<String, String> from, String word) {
-        int i = 0;
-
-        String currentWord = word;
-        while (from.containsKey(currentWord)) {
-            i++;
-            currentWord = from.get(currentWord);
-        }
-        return i;
-    }
-
-    private List<String> getAllPermutation(String currentWord) {
+    private List<String> getAllPermutation(String currentWord, Set<String> wordList) {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < currentWord.length(); i++) {
             for (char c = 'a'; c <= 'z'; c ++) {
                 if (c != currentWord.charAt(i)){
                     char[] chars = currentWord.toCharArray();
                     chars[i] = c;
-                    result.add(new String(chars));
+                    String word = new String(chars);
+                    if (wordList.contains(word)) {
+                        wordList.remove(word);
+                        result.add(word);
+                    }
                 }
             }
         }
